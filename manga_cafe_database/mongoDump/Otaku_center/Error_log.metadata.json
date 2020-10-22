@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"Otaku_center.Error_log"}],"uuid":"cbf0be70aed4455086208d4b36b419d3"}

@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+  nginx:
+    build:
+      context: ./Nginx_server_config/
+      dockerfile: Dockerfile
+    ports:
+      - 1789:80
+      - 1790:81
+      - 1791:82
+    networks:
+      - my-network
+    depends_on:
+      - flask_admin
+      - flask_client
+      - my_mongo
+
+  flask_admin:
+    build:
+      context: ./manga_cafe_admin/
+      dockerfile: Dockerfile
+    container_name: flask_admin
+    command: gunicorn --bind 0.0.0.0:8001 --workers 4 "apiControl:app"
+    networks:
+      my-network:
+        aliases:
+          - flask-app1
+    depends_on:
+      - my_mongo
+    volumes:
+      - "/Users/vankevin/Documents/MangaScan:/appli/LOCALdata"
+      
+  
+  flask_client:
+    build:
+      context: ./manga_cafe_client/
+      dockerfile: Dockerfile
+    container_name: flask_client
+    command: gunicorn --bind 0.0.0.0:9001 --workers 4 "main:app"
+    networks:
+      my-network:
+        aliases:
+          - flask-app2
+    depends_on:
+      - my_mongo
+    volumes:
+      - "/Users/vankevin/Documents/MangaScan:/appli/LOCALdata"
+
+  my_mongo:
+    build:
+      context: ./manga_cafe_database/
+      dockerfile: Dockerfile
+    ports:
+      - 27017:27017
+    networks:
+     - my-network
+    volumes:
+      - "/Users/vankevin/Documents/Manga_cafe/manga_cafe_database/mongoDump:/data/backup"
+      - "/Users/vankevin/Documents/Manga_cafe/manga_cafe_database/current_database:/data/db"
+
+networks:
+  my-network:
+    driver: bridge

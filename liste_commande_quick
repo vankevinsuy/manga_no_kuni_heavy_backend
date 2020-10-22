@@ -1,0 +1,14 @@
+mongodump --out=/data/backup -u root -p mongoexample        # sauvegarde de la base de données
+mongorestore /data/backup -u root -p mongoexample           # restorer la sauvegare de la base de données        
+
+
+
+192.168.1.14:1790/DOWNLOADALL
+192.168.1.14:1790/MALMANGADATAUPDATE
+192.168.1.14:1790/MANGAWEHAVEUPDATE
+192.168.1.14:1790/UPDATESCAN
+
+# ajouter dans docker-compose my-mongo
+environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: mongoexample
