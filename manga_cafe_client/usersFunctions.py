@@ -43,7 +43,7 @@ def testImage():
         try:
             for chapitre in os.listdir(CommonVariables.ROOT_DIR + '/LOCALdata/{}'.format(manga)):
                 for image in os.listdir(CommonVariables.ROOT_DIR + '/LOCALdata/{}/{}'.format(manga, chapitre)):
-                    res = " http://localhost:5000/LOCALdata/{}/{}/{}".format(manga, chapitre, image)
+                    res = " http://localhost:1987/scans/{}/{}/{}".format(manga, chapitre, image)
                     return res
         except:
             pass

@@ -31,7 +31,6 @@ services:
     volumes:
       - "/Users/vankevin/Documents/MangaScan:/appli/LOCALdata"
       
-  
   flask_client:
     build:
       context: ./manga_cafe_client/
@@ -44,8 +43,6 @@ services:
           - flask-app2
     depends_on:
       - my_mongo
-    volumes:
-      - "/Users/vankevin/Documents/MangaScan:/appli/LOCALdata"
 
   my_mongo:
     build:
@@ -54,10 +51,17 @@ services:
     ports:
       - 27017:27017
     networks:
-     - my-network
+      - my-network
     volumes:
-      - "/Users/vankevin/Documents/Manga_cafe/manga_cafe_database/mongoDump:/data/backup"
-      - "/Users/vankevin/Documents/Manga_cafe/manga_cafe_database/current_database:/data/db"
+      - "/Users/vankevin/Documents/manga_cafe_back-end/manga_cafe_database/mongoDump:/data/backup"
+      - "/Users/vankevin/Documents/manga_cafe_back-end/manga_cafe_database/current_database:/data/db"
+
+  apache_scans:
+    image: httpd
+    volumes:
+        - "/Users/vankevin/Documents/MangaScan:/usr/local/apache2/htdocs/scans"
+    ports:
+        - 1987:80
 
 networks:
   my-network:
