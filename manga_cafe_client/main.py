@@ -1,27 +1,26 @@
-from flask import Flask
+from flask import Flask,request
 import Tools
-import usersFunctions
-
+from usersFunctions import UserFunctions
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
     return "Flask app client"
 
-@app.route("/SIGNUP")   #  http://localhost:5000/SIGNUP?pseudo=snoozy&password=deadoralive
-def signup():
-    return usersFunctions.signup()
-
-@app.route('/GETALL')   # localhost:5000/GETALL?limit=10
+@app.route('/GETALL')   # localhost:5000/GETALL?pseudo=snoozy&password=deadoralive&limit=10
 def getall():
-    return usersFunctions.getAllManga()
+    pseudo = request.args.get('pseudo')
+    password = request.args.get('password')
+    return UserFunctions(pseudo, password).getAllManga()
 
-@app.route('/TEST') # localhost:5000/TEST
+@app.route('/TEST') # localhost:5000/TEST?pseudo=snoozy&password=deadoralive
 def test():
-    img = usersFunctions.testImage()
+    pseudo = request.args.get('pseudo')
+    password = request.args.get('password')
+    img = UserFunctions(pseudo, password).testImage()
     return  "<img src='{}'>".format(img)
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #Tools.commandLineSetup()
     #Tools.setupLOCALDATA()
-    #app.run(host ='localhost', port = 5000, debug = True)
+    app.run(host ='localhost', port = 5000, debug = True)

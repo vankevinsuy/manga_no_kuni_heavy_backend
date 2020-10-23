@@ -7,9 +7,9 @@ import hashlib
 
 class Users(Database):
     def __init__(self):
-        db = CommonVariables.Command_line['-d']
-        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[db]['client'])
-        self.otaku_center_database = self.my_client[CommonVariables.DATABASES[db]["database"]]
+        self.db = CommonVariables.Command_line['-d']
+        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[self.db]['client'])
+        self.otaku_center_database = self.my_client[CommonVariables.DATABASES[self.db]["database"]]
         self.users_collection = self.otaku_center_database["Users"]
 
     def getCollection(self):
@@ -29,11 +29,18 @@ class Users(Database):
             return False
 
         else:
-            self.users_collection.insert({
-                'pseudo': pseudo,
-                'hashed_pseudo' : hashed_pseudo,
-                'password': hashed_password,
-                'list_manga_reading': [],
-                'status' : "client"
-            })
-            return True
+            try :
+                self.users_collection.insert({
+                    'pseudo': pseudo,
+                    'hashed_pseudo' : hashed_pseudo,
+                    'password': hashed_password,
+                    'list_manga_reading': [],
+                    'status' : "client"
+                })
+                self.otaku_center_database.add_user(pseudo, password, roles=[{'role':'read','db':CommonVariables.DATABASES[self.db]["database"]}])
+                return True
+
+            except:
+                print("user not added")
+                return False
+

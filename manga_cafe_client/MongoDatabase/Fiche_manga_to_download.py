@@ -6,9 +6,9 @@ from MongoDatabase.Database import Database
 
 class Fiche_manga_to_download(Database):
 
-    def __init__(self):
+    def __init__(self, user, password):
         db = CommonVariables.Command_line['-d']
-        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[db]['client'])
+        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[db]['client'].format(user, password))
         self.otaku_center_database = self.my_client[CommonVariables.DATABASES[db]["database"]]
         self.fiche_manga_collection = self.otaku_center_database["Fiche_manga_to_download"]
 
