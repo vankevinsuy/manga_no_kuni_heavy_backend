@@ -11,11 +11,14 @@ from MongoDatabase.MAL_manga_data import MAL_manga_data
 
 
 class Manga_we_have(Database):
-    def __init__(self):
+    def __init__(self, user, password):
         db = CommonVariables.Command_line['-d']
-        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[db]['client'])
+        self.my_client = pymongo.MongoClient(CommonVariables.DATABASES[db]['client'].format(user, password))
         self.otaku_center_database = self.my_client[CommonVariables.DATABASES[db]["database"]]
         self.Manga_we_have_collection = self.otaku_center_database["Manga_we_have"]
+
+        self.user = user
+        self.password = password
 
     def getCollection(self):
         return self.Manga_we_have_collection
@@ -25,7 +28,7 @@ class Manga_we_have(Database):
 
     def updateCollection(self):
         self.Manga_we_have_collection.drop()
-        FichemangaCollection = Fiche_manga_to_download().getCollection()
+        FichemangaCollection = Fiche_manga_to_download(self.user, self.password).getCollection()
         toInsert = []
 
         for manga in os.listdir(CommonVariables.ROOT_DIR + "/LOCALdata"):
@@ -56,7 +59,7 @@ class Manga_we_have(Database):
                 toInsert.append({
                     "name": Manga_data['manga_name'],
                     "myanimelist_id": Manga_data['myanimelist_id'],
-                    "poster_image": MAL_manga_data().getDocumentByID(int(Manga_data['myanimelist_id']))[
+                    "poster_image": MAL_manga_data(self.user, self.password).getDocumentByID(int(Manga_data['myanimelist_id']))[
                         'image_url'],
                     "last_chapter": last_chapter,
                     "chapitres": listChapterPage,

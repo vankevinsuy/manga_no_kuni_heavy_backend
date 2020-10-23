@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import adminFunctions as adminFunctions
 import CommonVariables
 import Tools
@@ -29,6 +29,13 @@ def MAL_manga_data_update():
 @app.route("/MANGAWEHAVEUPDATE") 
 def Manga_we_have_update():
     adminFunctions.Manga_we_have_update()
+    return CommonVariables.RETURN_STATEMENT
+
+@app.route("/SIGNUP") # 0.0.0.0:5000/SIGNUP?pseudo=snoozy&password=deadoralive
+def signup():
+    pseudo = request.args.get('pseudo')
+    password = request.args.get('password')
+    adminFunctions.signup(pseudo, password)
     return CommonVariables.RETURN_STATEMENT
 
 if __name__ == "__main__":
