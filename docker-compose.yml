@@ -19,7 +19,7 @@ services:
 
   flask_admin:
     build:
-      context: ./manga_cafe_admin/
+      context: ./admin/
       dockerfile: Dockerfile
     container_name: flask_admin
     command: gunicorn --bind 0.0.0.0:8001 --workers 4 "apiControl:app"
@@ -35,7 +35,7 @@ services:
       
   flask_client:
     build:
-      context: ./manga_cafe_client/
+      context: ./client/
       dockerfile: Dockerfile
     container_name: flask_client
     command: gunicorn --bind 0.0.0.0:9001 --workers 4 "main:app"
@@ -49,7 +49,7 @@ services:
   
   my_mongo:
     build:
-      context: ./manga_cafe_database/
+      context: ./database/
       dockerfile: Dockerfile
     ports:
       - 27017:27017
