@@ -30,7 +30,7 @@ services:
     depends_on:
       - my_mongo
     volumes:
-      - "/Users/vankevin/Documents/MangaScan:/appli/LOCALdata"
+      - "./MangaScan:/appli/LOCALdata"
     restart: always
       
   flask_client:
@@ -56,8 +56,8 @@ services:
     networks:
       - my-network
     volumes:
-      - "/Users/vankevin/Documents/manga_cafe_back-end/manga_cafe_database/mongoDump:/data/backup"
-      - "/Users/vankevin/Documents/manga_cafe_back-end/manga_cafe_database/current_database:/data/db"
+      - "./database/mongoDump:/data/backup"
+      - "./database/current_database:/data/db"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -66,7 +66,7 @@ services:
   apache_scans:
     image: httpd
     volumes:
-        - "/Users/vankevin/Documents/MangaScan:/usr/local/apache2/htdocs/scans"
+        - "./MangaScan:/usr/local/apache2/htdocs/scans"
     ports:
         - 1987:80
     restart: always

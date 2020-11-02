@@ -4,7 +4,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DATABASES = {
     'local' : {
-        "client" : "mongodb://{}:{}@192.168.1.14:27017",
+        "client" : "mongodb://{}:{}@192.168.1.14:27017/?authSource=Otaku_center",
         "database" : "Otaku_center"
     }
 }
@@ -14,6 +14,5 @@ Command_line = {'-d' : "local", # database, correspond à une des clefs de DATAB
                 '-f' : "none"   # fonction à lancer
                 }
 
-RETURN_STATEMENT = {'scan_downloaded' : [],
-                    'error_scan_downloaded' : []
+RETURN_STATEMENT = {
                     }
