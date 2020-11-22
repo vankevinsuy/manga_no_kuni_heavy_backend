@@ -1,13 +1,29 @@
-import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import SplashScreen from './Activities/splashScreen';
+import React from 'react';
 
-class HelloWorldApp extends Component {
-  render() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import SplashScreen from './Activities/SplashScreen';
+import ConnectionInscription from './Activities/ConnectionInscription';
+import Home from './Activities/Home';
+
+const Stack = createStackNavigator();
+
+const App  = () => {
     return (
-      <SplashScreen></SplashScreen>
+      <NavigationContainer>
+
+        <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
+
+          <Stack.Screen name="SplashScreen" component={SplashScreen}  />
+          <Stack.Screen name="ConnectionInscription" component={ConnectionInscription} />
+          <Stack.Screen name="Home" component={Home} />
+
+        </Stack.Navigator>
+
+      </NavigationContainer>
+
     );
-  }
 }
 
-export default HelloWorldApp;
+export default App;

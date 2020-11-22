@@ -1,7 +1,6 @@
 # ensemble des fonctions dédiées aux admins
 import errno
 import os
-import sys
 
 from MongoDatabase.Fiche_manga_to_download import Fiche_manga_to_download
 from MongoDatabase.MAL_manga_data import MAL_manga_data
@@ -95,7 +94,7 @@ def updateScan():
                 # télécharger les scans
                 LocalData_manga_directory = CommonVariables.ROOT_DIR + "/LOCALdata/{}_{}/{}".format(fiche_manga['manga_name'], fiche_manga['myanimelist_id'], last_chapter + index)
                 MangaFreak().DownloadScanFromUrl(url, LocalData_manga_directory)
-                #imagesToPDF(LocalData_manga_directory, fiche_manga['pattern_dict'][key].format(str(last_chapter + index), '{}', '{}').split('{}')[0])
+                imagesToPDF(LocalData_manga_directory, fiche_manga['pattern_dict'][key].format(str(last_chapter + index), '{}', '{}').split('{}')[0])
 
                 # mettre à jour la base de données
                 fiche_manga_collection.update({'myanimelist_id' : fiche_manga['myanimelist_id']}, {"$set": { "last_chapter": last_chapter + index }})

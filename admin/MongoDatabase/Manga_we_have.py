@@ -9,7 +9,6 @@ from MongoDatabase.Fiche_manga_to_download import Fiche_manga_to_download
 from MongoDatabase.MAL_manga_data import MAL_manga_data
 
 
-
 class Manga_we_have(Database):
     def __init__(self):
         db = CommonVariables.Command_line['-d']

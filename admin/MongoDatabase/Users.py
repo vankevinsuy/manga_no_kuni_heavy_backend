@@ -1,8 +1,9 @@
+import hashlib
+
 import pymongo
 
 import CommonVariables
 from MongoDatabase.Database import Database
-import hashlib
 
 
 class Users(Database):
@@ -26,6 +27,7 @@ class Users(Database):
         # vérifier si le pseudo existe déjà en base
         user_exist_already = self.users_collection.find({'hashed_pseudo': hashed_pseudo}).count()
         if(user_exist_already >= 1):
+            CommonVariables.RETURN_STATEMENT['addNewUser'] = "User already in the system"
             return False
 
         else:
@@ -38,9 +40,17 @@ class Users(Database):
                     'status' : "client"
                 })
                 self.otaku_center_database.add_user(pseudo, password, roles=[{'role':'read','db':CommonVariables.DATABASES[self.db]["database"]}])
+                CommonVariables.RETURN_STATEMENT['addNewUser'] = {
+                    'pseudo': pseudo,
+                    'hashed_pseudo' : hashed_pseudo,
+                    'password': hashed_password,
+                    'list_manga_reading': [],
+                    'status' : "client"
+                }
                 return True
 
             except:
                 print("user not added")
+                CommonVariables.RETURN_STATEMENT['addNewUser'] = "User not added"
                 return False
 

@@ -4,7 +4,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DATABASES = {
     'local' : {
-        "client" : "mongodb://{}:{}@192.168.1.14:27017/?authSource=Otaku_center",
+        "client" : "mongodb://{}:{}@192.168.1.22:27017/?authSource=Otaku_center",
         "database" : "Otaku_center"
     }
 }

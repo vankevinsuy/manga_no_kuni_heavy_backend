@@ -1,17 +1,39 @@
-import React, { Component } from 'react';
-import { StyleSheet,Text, View , Image} from 'react-native';
+import React from 'react';
+import { StyleSheet, View , Image} from 'react-native';
+import * as app_color from '../assets/themes/common_style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-class SplashScreen extends Component {
-  render() {
+
+const defineActivity = (navigation) =>{
+    setTimeout(async () => {
+        try {
+            const pseudo = await AsyncStorage.getItem('pseudo');
+            console.log("pseudo = " + pseudo + " Activity = SplashScreen");
+    
+            if(pseudo !== null) {
+                navigation.navigate("ConnectionInscription"); // home
+            }
+            else{
+                navigation.navigate("ConnectionInscription");
+            }
+        } 
+        catch(e) {
+            console.log(e);
+        }
+    }, 2000)
+
+};
+
+const SplashScreen = ({ navigation }) =>  {
+    defineActivity(navigation);
     return (
       <View style={styles.container}>
             <Image
                 style={styles.logo}
-                source={require('../assets/logo.png')}
+                source={require('../assets/app_images/logo.png')}
             />
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -19,7 +41,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor : "#ff9300"
+        backgroundColor : app_color.splash_screen_color
     },
     logo : {
         height : 400,

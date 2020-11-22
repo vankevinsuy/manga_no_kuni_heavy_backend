@@ -22,7 +22,7 @@ services:
       context: ./admin/
       dockerfile: Dockerfile
     container_name: flask_admin
-    command: gunicorn --bind 0.0.0.0:8001 --workers 4 "apiControl:app"
+    command: gunicorn --bind 0.0.0.0:8001 --workers=2 --timeout=120 "apiControl:app"
     networks:
       my-network:
         aliases:
@@ -64,7 +64,9 @@ services:
     restart: always
   
   apache_scans:
-    image: httpd
+    build:
+      context: ./apache_scans/
+      dockerfile: Dockerfile
     volumes:
         - "./MangaScan:/usr/local/apache2/htdocs/scans"
     ports:

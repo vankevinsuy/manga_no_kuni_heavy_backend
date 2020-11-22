@@ -1,7 +1,6 @@
 import pymongo as pymongo
 import requests
 
-
 import CommonVariables
 from MongoDatabase.Database import Database
 

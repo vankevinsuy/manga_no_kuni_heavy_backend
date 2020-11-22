@@ -16,7 +16,7 @@ class UserFunctions():
         db = CommonVariables.Command_line['-d']
 
         try:
-            self.my_client = pymongo.MongoClient("192.168.1.14:27017")
+            self.my_client = pymongo.MongoClient("192.168.1.22:27017")
             con = self.my_client["Otaku_center"].authenticate(self.pseudo, self.password)
 
             if con:
